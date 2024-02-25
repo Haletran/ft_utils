@@ -1,10 +1,8 @@
 #MY ZSHRC CONFIG
 
 #VARIABLES
-PS1="${PS1:0:-3}\$(__git_ps1 \"\[\033[0;33m\]:%s\[\033[00m\]\")\$ "
 export HISTCONTROL=ignoredups
 export EDITOR=vim
-YOUR_PROJECT_REPO=""
 
 #ALIAS
 
