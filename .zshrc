@@ -1,28 +1,30 @@
-#MY ZSHRC CONFIG
+#Variables
 
-#VARIABLES
-export HISTCONTROL=ignoredups
-export EDITOR=vim
+setopt autocd
 
-#ALIAS
-
-##Basic Utilities
-alias repo="git clone $YOUR_PROJECT_REPO"
+# Basic Utilities
 alias n="norminette -R CheckForbiddenSourceHeader"
-alias ccw="cc -Wall -Werror -Wextra"
-alias c="code ."
-alias clean="du -h | sort -hf"
-alias intra="xdg-open https://intra.42.fr"
+alias g="cc -Wall -Werror -Wextra"
+alias cl="git clone git@github.com:Haletran/42-Cursus.git"
+alias as="code ."
+alias vg="valgrind --leak-check=full --trace-children=yes --track-fds=yes --show-below-main=no"
+alias gd="~/Downloads/gf/./gf2"
+alias ph="./philosopher 5 800 200 200"
+alias neo="~/sgoinfre/Programs/fastfetch"
+alias choose="~/sgoinfre/Programs/list_website/choose"
 alias ls="ls --color=auto"
-alias cl="git clone"
-alias rmf="rm -rf"
-#alias trash="mv -t ~/.local/share/Trash/files --backup=t"
 
-##ZSHRC config utilities
-alias edit="vim ~/.zshrc"
-alias reload="source ~/.zshrc"
+#Cleaning
+alias clean="du -h  | sort -hf"
+alias clean1="du -d 1 -h | sort -h"
+alias clean2="du -h - d 2 . | sort -hf"
 
-#Functions
+#Makefile Commands
+alias mf="make fclean"
+alias mc="make clean"
+alias mr="make re"
+alias m="make"
+
 function gp() {
 	if [ -f "Makefile" ]; then make fclean; fi
 	git add .
@@ -34,3 +36,12 @@ function mkcd() {
    mkdir -p $1
    cd $1
 }
+
+#ZSHRC conf utilities
+alias edit="vim ~/.zshrc"
+alias reload="source ~/.zshrc"
+alias gs="gnome-session"
+
+stty stop undef
+stty start undef
+export PATH=$HOME/.local/bin:$PATH
