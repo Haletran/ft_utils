@@ -6,7 +6,7 @@
 #    By: bapasqui <bapasqui@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:02:08 by bapasqui          #+#    #+#              #
-#    Updated: 2024/04/18 17:44:27 by bapasqui         ###   ########.fr        #
+#    Updated: 2024/04/18 18:25:14 by bapasqui         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,9 +21,9 @@
 
 current_dir=$(pwd)
 
-if [[ "$current_dir" != */sgoinfre/* ]]; then
-    echo "You are not in the sgoinfre directory."
-    exit 1
+if [[ "$current_dir" != */sgoinfre ]]; then
+  echo "You are not in the sgoinfre directory."
+  exit 1
 fi
 
 install_nvim()
