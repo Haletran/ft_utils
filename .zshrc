@@ -1,23 +1,16 @@
 #Variables
-
 setopt autocd
 
 # Basic Utilities
 alias n="norminette -R CheckForbiddenSourceHeader"
 alias g="cc -Wall -Werror -Wextra"
-alias cl="git clone git@github.com:Haletran/42-Cursus.git"
-alias as="code ."
 alias vg="valgrind --leak-check=full --trace-children=yes --track-fds=yes --show-below-main=no"
-alias gd="~/Downloads/gf/./gf2"
-alias ph="./philosopher 5 800 200 200"
-alias neo="~/sgoinfre/Programs/fastfetch"
-alias choose="~/sgoinfre/Programs/list_website/choose"
 alias ls="ls --color=auto"
+alias nvim="~/sgoinfre/nvim-linux64/bin/nvim"
 
 #Cleaning
-alias clean="du -h  | sort -hf"
-alias clean1="du -d 1 -h | sort -h"
-alias clean2="du -h - d 2 . | sort -hf"
+alias check="du -h  | sort -hf"
+alias clean="rm -rf /nfs/homes/bapasqui/.Trash/* && rm -rf /nfs/homes/bapasqui/./.cache/"
 
 #Makefile Commands
 alias mf="make fclean"
