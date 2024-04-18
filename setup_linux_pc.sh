@@ -6,7 +6,7 @@
 #    By: bapasqui <bapasqui@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 17:02:08 by bapasqui          #+#    #+#              #
-#    Updated: 2024/04/18 18:25:14 by bapasqui         ###   ########.fr        #
+#    Updated: 2024/04/18 18:31:52 by bapasqui         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ install_vscode()
     chmod 777 code-stable-x64-*.tar.gz
     tar -xzf code-stable-x64-*.tar.gz
     rm code-stable-x64-*.tar.gz
-    echo 'alias code="~/sgoinfre/code-stable-x64/bin/code"' >> ~/.zshrc
+    echo 'alias code="~/sgoinfre/VSCode-linux-x64/bin"' >> ~/.zshrc
 }
 
 main()
