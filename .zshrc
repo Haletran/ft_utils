@@ -6,7 +6,6 @@ alias n="norminette -R CheckForbiddenSourceHeader"
 alias g="cc -Wall -Werror -Wextra"
 alias vg="valgrind --leak-check=full --trace-children=yes --track-fds=yes --show-below-main=no"
 alias ls="ls --color=auto"
-alias nvim="~/sgoinfre/nvim-linux64/bin/nvim"
 
 #Cleaning
 alias check="du -h  | sort -hf"
