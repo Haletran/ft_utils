@@ -11,26 +11,8 @@
 # **************************************************************************** #
 
 #!bin/sh
-#    # Create a desktop file for the shortcut
-#    cat > ~/.local/share/applications/vscode.desktop <<EOL
-#[Desktop Entry]
-#Version=1.0
-#Type=Application
-#Name=Visual Studio Code
-#Icon=~/sgoinfre/VSCode-linux-x64/resources/app/resources/linux/code.png
-#Path=~/sgoinfre/VSCode-linux-x64
-#Exec=~/sgoinfre/VSCode-linux-x64/bin/code
-#Comment=Visual Studio Code
-#Categories=Development;IDE;
-#Terminal=false
-#StartupNotify=false
-#EOL
-#
-#    # Make the desktop file executable
-#    chmod +x ~/.local/share/applications/vscode.desktop
 
 current_dir=$(pwd)
-
 #https://download.jetbrains.com/fonts/JetBrainsMono-2.304.zip
 
 check_if_sgoinfre() {
@@ -52,6 +34,7 @@ install_nvim()
     tar -xzf nvim-linux64.tar.gz
     rm nvim-linux64.tar.gz
     echo 'alias nvim="~/sgoinfre/nvim-linux64/bin/nvim"' >> ~/.zshrc
+    source ~/.zshrc
 }
 
 install_vscode()
@@ -61,13 +44,8 @@ install_vscode()
     chmod 777 code-stable-x64-*.tar.gz
     tar -xzf code-stable-x64-*.tar.gz
     rm code-stable-x64-*.tar.gz
-    if [ -n "$BASH_VERSION" ]; then
-        echo "alias code=\"${current_dir}/VSCode-linux-x64/bin/code\"" >> ~/.bashrc
-	source ~/.bashrc
-    elif [ -n "$ZSH_VERSION" ]; then
-        echo "alias code=\"${current_dir}/VSCode-linux-x64/bin/code\"" >> ~/.zshrc
-	source ~/.zshrc
-    fi
+    echo "alias code=\"${current_dir}/VSCode-linux-x64/bin/code\"" >> ~/.zshrc
+    source ~/.zshrc
 }
 
 main()
