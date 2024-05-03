@@ -62,9 +62,10 @@ main()
     read -p "Do you want to setup your zshrc? (y/n): " SETUP_ZSHRC
     if [ $? -eq 1 ] ; then echo -e "\nexit" && exit 1; fi
     if [ $SETUP_ZSHRC = "y" ]; then
-    if [ -f "~/.zshrc" ]
-        curl -LO https://raw.githubusercontent.com/Haletran/ft_utils/main/.zshrc
-        cat .zshrc >> ~/.zshrc
+        if [ -f "~/.zshrc" ]; then
+            curl -LO https://raw.githubusercontent.com/Haletran/ft_utils/main/.zshrc
+            cat .zshrc >> ~/.zshrc
+        fi
     fi
 
     read -p "Do you want to install nvim? (y/n): " INSTALL_NVIM
