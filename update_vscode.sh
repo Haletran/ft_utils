@@ -7,13 +7,8 @@ install_vscode()
     chmod 777 code-stable-x64-*.tar.gz
     tar -xzf code-stable-x64-*.tar.gz
     rm code-stable-x64-*.tar.gz
-    if [ -n "$BASH_VERSION" ]; then
-        echo "alias code=\"${current_dir}/VSCode-linux-x64/bin/code --no-sandbox\"" >> ~/.bashrc
-	source ~/.bashrc
-    elif [ -n "$ZSH_VERSION" ]; then
-        echo "alias code=\"${current_dir}/VSCode-linux-x64/bin/code --no-sandbox\"" >> ~/.zshrc
-	source ~/.zshrc
-    fi
+    echo "alias code=\"${current_dir}/VSCode-linux-x64/bin/code --no-sandbox\"" >> ~/.zshrc
+    source ~/.zshrc
 }
 
 main()
