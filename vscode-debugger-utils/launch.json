@@ -9,7 +9,7 @@
           "name": "Debug cube3d",
           "type": "cppdbg",
           "request": "launch",
-          "program": "${workspaceFolder}/",
+          "program": "${workspaceFolder}/a.out",
           "args": [],
           "stopAtEntry": false,
           "cwd": "${workspaceFolder}",
