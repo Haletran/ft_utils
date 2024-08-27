@@ -6,7 +6,7 @@
   "configurations": [
   
       {
-          "name": "Debug cube3d",
+          "name": "",
           "type": "cppdbg",
           "request": "launch",
           "program": "${workspaceFolder}/a.out",
