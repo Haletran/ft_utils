@@ -19,8 +19,6 @@ If you want to install vscode-debugger :
 bash <(wget -qO- https://raw.githubusercontent.com/Haletran/ft_utils/main/install_vscode_debugger.sh)
 ```
 
-
-
 ## VERSION
 
 CLANG : 12.0.1-19ubuntu3
@@ -31,3 +29,4 @@ GDB = gdb (Ubuntu 12.1-0ubuntu1~22.04.2) 12.1
 nix-shell = 2.23.1
 bash = version 5.1.16
 zsh = 5.8.1
+cargo  = 1.75.0
