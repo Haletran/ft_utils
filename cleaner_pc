@@ -1,0 +1,71 @@
+#!/bin/bash
+
+# COLOR
+RESET='\033[0m'
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+B_RED='\033[1;31m'
+
+# VAR
+storage_size=$(cd ~ && du -h | sort -hf | tail -n 1 | awk '{print $1}' | sed 's/.$//')
+storage_size_value=$(echo "$storage_size" | sed 's/[A-Za-z]//g')
+interaction=no
+bypass=no
+
+#FUNCTIONS
+function get_Dir()
+{
+    echo -e "${BLUE}-> Here are the top 10 largest directories:${RESET}"
+    echo -e "${BLUE}[-------------------------------------]${RESET}"
+    cd ~ && du -h  | sort -rh | head -n 10
+    echo -e "${BLUE}[-------------------------------------]${RESET}"
+}
+
+function clean_up()
+{
+    echo -e "${YELLOW}-> Cleaning up...${RESET}"
+    cd ~ && rm -rf ./.cache/* >> /dev/null 2>&1
+    echo -e "${GREEN}-> Done!${RESET}"
+}
+
+function bypass_storage()
+{
+    echo -e "${GREEN}Launching bypass mode...${RESET}"
+    export XDG_DATA_DIRS=$XDG_DATA_DIRS:$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/var/lib/snapd/desktop:$HOME/.local/share/applications
+    echo "[XDG_DATA_DIRS] env set"
+    gnome-session &> /dev/null &
+}
+
+function main()
+{
+
+    if (( $(echo "$storage_size_value > 5" | bc -l) )); then
+        echo -e "${RED}[ FULL ]${RESET} : Storage size: ${RED}$storage_size${RESET}"
+        if [ "$interaction" == "no" ]; then
+            if [ "$bypass" == "yes" ]; then
+                bypass_storage
+            else
+                get_Dir
+                clean_up
+            fi
+        else
+            read -p "Do you want to clean up? [y/n]: " answer
+            if [ "$answer" == "y" ]; then
+                get_Dir
+                clean_up
+            fi
+            read -p "Do you want to bypass? [y/n]: " answer
+            if [ "$answer" == "y" ]; then
+                bypass_storage
+            fi
+        fi
+    else
+        echo -e "${GREEN}[ NOT FULL ]${RESET} : Storage size: ${GREEN}$storage_size${RESET}"
+        echo -e "${GREEN}-> No need to clean up${RESET}"
+    fi
+}
+
+# MAIN
+main
