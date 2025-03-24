@@ -10,7 +10,7 @@ B_RED='\033[1;31m'
 
 DUST_LINK=https://github.com/bootandy/dust/releases/download/v1.1.2/dust-v1.1.2-x86_64-unknown-linux-gnu.tar.gz
 GUM_LINK=https://github.com/charmbracelet/gum/releases/download/v0.16.0/gum_0.16.0_Linux_x86_64.tar.gz
-BYPASS_MODE=true
+BYPASS_MODE=false
 DELETE_DEPENDENCIES=false
 CURRENT_DIR=$(pwd)
 
@@ -68,6 +68,9 @@ bypass() {
 storage_checker() {
     gum style --border normal --border-foreground 212 --margin "1" --padding "1 2" --bold "🧹 PC Storage Cleaner"
     total_size=$(dust ~ -z 100M -C | tail -n 1 | awk '{print $2}' | tr -cd '0-9.')
+    if [[ -z "$total_size" ]]; then
+        total_size=$(cd ~ && du -h | sort -hf | tail -n 1 | awk '{print $1}' | sed 's/.$//')
+    fi
 
     if (( $(echo "$total_size > 5" | bc -l) )); then
         if [[ "$BYPASS_MODE" == true ]]; then
@@ -103,7 +106,7 @@ storage_checker() {
             gum style --foreground 3 "You can relog now."
         fi
     else
-        gum style --foreground 2 "Total size is less than 5GB."
+			gum style --foreground 2 "Total size is less than 5GB. (${total_size}G)"
     fi
 }
 
