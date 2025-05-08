@@ -112,9 +112,9 @@ replace_current_screensaver() {
     \cp $SCREENSV_PARAM /tmp/codam-web-greeter-user-wallpaper
 }
 
+parse_args "$@"
 
 main() {
-    parse_args "$@"
     if [ ! "$FACE_PARAM" ]; then
         FACE_PARAM=$(zenity --file-selection --title="Select a profile picture" --file-filter="Images | *.png *.jpg *.jpeg *.gif")
         [ -z "$FACE_PARAM" ] && echo -e "${RED}\033[1mNo profile picture selected, exiting...${NC}" && exit 1
