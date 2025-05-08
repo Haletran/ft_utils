@@ -111,9 +111,9 @@ replace_current_screensaver() {
     /usr/bin/gsettings set org.gnome.desktop.screensaver picture-uri "file://${SCREENSV_PARAM}"
     \cp $SCREENSV_PARAM /tmp/codam-web-greeter-user-wallpaper
 }
+parse_args "$@"
 
 main() {
-    parse_args "$1"
     if [ ! "$FACE_PARAM" ]; then
         FACE_PARAM=$(zenity --file-selection --title="Select a profile picture" --file-filter="Images | *.png *.jpg *.jpeg *.gif")
         [ -z "$FACE_PARAM" ] && echo -e "${RED}\033[1mNo profile picture selected, exiting...${NC}" && exit 1
@@ -130,7 +130,7 @@ main() {
     echo -e "${GREEN}\033[1mProfile picture and screensaver updated successfully!${NC}"
 }
 
-main "$@"
+main
 
 
 
