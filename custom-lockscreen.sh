@@ -14,6 +14,15 @@ PWD=$(pwd)
 FACE_PARAM=""
 SCREENSV_PARAM=""
 
+## COLORS
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+NC='\033[0m'
+
+## UTILS
 parse_args() {
     while [[ $# -gt 0 ]]; do
         case $1 in
@@ -68,15 +77,6 @@ parse_args() {
     done
 }
 
-## COLORS
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[0;33m'
-BLUE='\033[0;34m'
-CYAN='\033[0;36m'
-NC='\033[0m' # No Color
-
-## UTILS 
 get_wallpaper_path() {
     wallpaper=$(gsettings get org.gnome.desktop.background picture-uri | sed "s/^'file:\/\///;s/'$//")
     \echo "$wallpaper"
@@ -90,7 +90,6 @@ check_files()
     fi
 }
 
-## Replacing and setting pictures
 replace_current_face() {
     if [ ! -f ~/.face ]; then
         \cp "$FACE_PARAM" ~/.face
