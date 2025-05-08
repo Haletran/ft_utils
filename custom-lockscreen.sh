@@ -9,10 +9,13 @@ TMP_WALLPAPER_PATH="/tmp/codam-web-greeter-user-wallpaper"
 TMP_AVATAR_PATH="/tmp/codam-web-greeter-user-avatar"
 BASE_WALLPAPER_PATH="/usr/share/42/42.png"
 FACE_PATH="~/.face"
-CURRENT_VERSION="1.0.0"
+CURRENT_VERSION="1.0.1"
 PWD=$(pwd)
 FACE_PARAM=""
 SCREENSV_PARAM=""
+
+FACE_OPTIONS=false
+SCREENSAVER_OPTIONS=false
 
 ## COLORS
 RED='\033[0;31m'
@@ -49,6 +52,26 @@ parse_args() {
                 \echo -e "${GREEN}\033[1mDefault images restored!${NC}"
                 \exit 0
                 ;;
+            -f|--face)
+                shift
+                if [ -z "$1" ]; then
+                    \echo -e "${RED}Error: No face image provided${NC}"
+                    \exit 1
+                fi
+                FACE_PARAM=$1
+                FACE_OPTIONS=true
+                shift
+                ;;
+            -s|--screensaver)
+                shift
+                if [ -z "$1" ]; then
+                    \echo -e "${RED}Error: No screensaver image provided${NC}"
+                    \exit 1
+                fi
+                SCREENSV_PARAM=$1
+                SCREENSAVER_OPTIONS=true
+                shift
+                ;;
             -h|--help)
                 \echo "Usage: $0 [options] [face_image] [screensaver_image]"
                 \echo "  -> If no images are provided, a file selection dialog will be shown. (zenity)"
@@ -56,6 +79,8 @@ parse_args() {
                 \echo "  -v, --version   Display the version number"
                 \echo "  -r, --reset     Reset to default images"
                 \echo "  -h, --help      Show this help message"
+                \echo "  -f, --face      Specify a custom face image"
+                \echo "  -s, --screensaver Specify a custom screensaver image"
                 \exit 0
                 ;;
             -*)
@@ -83,7 +108,7 @@ get_wallpaper_path() {
 }
 
 check_files()
-{
+{   
     if [ ! -r "$1" ]; then
         \echo -e "${RED}\033[1mFile does not exist or is not readable${NC}"
         \exit 1
@@ -100,7 +125,8 @@ replace_current_face() {
         \cp "$FACE_PARAM" ~/.face
         \rm -f ~/tmp/codam-web-greeter-user-avatar
         \cp "$FACE_PARAM" /tmp/codam-web-greeter-user-avatar
-    fi    
+    fi
+    echo -e "${GREEN}\033[1mProfile picture set to: ${FACE_PARAM}${NC}"
 }
 
 replace_current_screensaver() {
@@ -110,24 +136,30 @@ replace_current_screensaver() {
     fi
     /usr/bin/gsettings set org.gnome.desktop.screensaver picture-uri "file://${SCREENSV_PARAM}"
     \cp $SCREENSV_PARAM /tmp/codam-web-greeter-user-wallpaper
+    echo -e "${GREEN}\033[1mScreensaver image set to: ${SCREENSV_PARAM}${NC}"
 }
 parse_args "$@"
 
 main() {
-    if [ ! "$FACE_PARAM" ]; then
+    if [ -z "$FACE_PARAM" ] && [ "$SCREENSAVER_OPTIONS" != "true" ]; then
         FACE_PARAM=$(zenity --file-selection --title="Select a profile picture" --file-filter="Images | *.png *.jpg *.jpeg *.gif")
         [ -z "$FACE_PARAM" ] && echo -e "${RED}\033[1mNo profile picture selected, exiting...${NC}" && exit 1
     fi
-    if [ ! "$SCREENSV_PARAM" ]; then
+    if [ -z "$SCREENSV_PARAM" ] && [ "$FACE_OPTIONS" != "true" ]; then
         SCREENSV_PARAM=$(zenity --file-selection --title="Select a screensaver image" --file-filter="Images | *.png *.jpg *.jpeg *.gif")
         [ -z "$SCREENSV_PARAM" ] && echo -e "${RED}\033[1mNo screensaver image selected, exiting...${NC}" && exit 1
     fi
 
-    check_files $FACE_PARAM
-    check_files $SCREENSV_PARAM
-    replace_current_face
-    replace_current_screensaver
-    echo -e "${GREEN}\033[1mProfile picture and screensaver updated successfully!${NC}"
+    if [ -n "$FACE_PARAM" ]; then
+        check_files "$FACE_PARAM"
+        replace_current_face
+    fi
+
+    if [ -n "$SCREENSV_PARAM" ]; then
+        check_files "$SCREENSV_PARAM"
+        replace_current_screensaver
+    fi
+
 }
 
 main
