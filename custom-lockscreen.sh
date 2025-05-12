@@ -162,6 +162,16 @@ main() {
 
 }
 
+if [ ! -f /usr/bin/nody-greeter ]; then
+    \echo -e "${RED}\033[1mError: You are not on a test session.${NC}"
+    \exit 1
+fi
+
+if [ ! -f /usr/bin/zenity ]; then
+    \echo -e "${RED}\033[1mError: zenity is not installed.${NC}"
+    \exit 1
+fi
+
 main
 
 
