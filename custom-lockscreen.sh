@@ -34,10 +34,10 @@ UNSPLASH_PATH="/home/${USER}/Pictures/Unsplash"
 
 ## GIFHY API
 GIFHY_API_KEY=5oLXGhIOw5r18zmB6XDUpaUX3VqWVKdy
-GIFHY_TAG="meme"
-GIFHY_URL=$(curl -s  https://api.giphy.com/v1/gifs/random?api_key=${GIFHY_API_KEY}&tag=${GIFHY_TAG})
+GIFHY_TAG="funny meme"
+GIFHY_ENCODED_TAG=$(echo "${GIFHY_TAG}" | jq -sRr @uri)
+GIFHY_RESPONSE=$(curl -s "https://api.giphy.com/v1/gifs/random?api_key=${GIFHY_API_KEY}&tag=${GIFHY_ENCODED_TAG}")
 GIFHY_PATH="/home/${USER}/Pictures/GIFHY"
-
 
 ## UTILS
 parse_args() {
@@ -87,7 +87,7 @@ parse_args() {
                 if [ ! -d $GIFHY_PATH ]; then
                     mkdir $GIFHY_PATH
                 fi
-                gif_url=$(echo "$GIFHY_URL" | jq -r '.data.images.original.url')
+                gif_url=$(echo "$GIFHY_URL" | jq -r '.data[0].images.original.url')
                 curl -o $GIFHY_PATH"/random_pp.gif" "$gif_url"
                 FACE_PARAM=$GIFHY_PATH"/random_pp.gif"
                 shift
