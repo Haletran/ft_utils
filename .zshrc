@@ -1,4 +1,14 @@
-# History saving
+fpath+=($HOME/.local/share/zsh/site-functions)
+function parse_git_branch() {
+    git branch 2> /dev/null | sed -n -e 's/^\* \(.*\)/[\1]/p'
+}
+setopt PROMPT_SUBST
+export PROMPT='~%F{green}$(parse_git_branch)%f %F{normal}$%f '
+export NIXPKGS_ALLOW_UNFREE=1
+export NIX_CONFIG="extra-experimental-features = nix-command flakes"
+export LD_LIBRARY_PATH=\$HOME/lib
+
+#History saving
 HISTFILE=~/.zsh/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
@@ -11,20 +21,22 @@ alias g++="c++ -Wall -Werror -Wextra -std=c++98"
 alias vg="valgrind --leak-check=full --track-fds=yes"
 alias neo="~/sgoinfre/Others/Programs/fastfetch"
 alias dc="cd ~/sgoinfre"
+alias code="~/Programs/vscode/bin/code --no-sandbox"
 alias bonus="for file in *; do mv "$file" "${file%.*}_bonus.${file##*.}"; done"
-alias code="DRI_PRIME=1 zed ."
-alias codekill='kill $(pgrep zed)'
-alias codev="/nfs/homes/bapasqui/sgoinfre/Others/VSCode-linux-x64/bin/code --no-sandbox"
 alias gl="git log --oneline --abbrev-commit --all"
-alias blue="~/sgoinfre/Others/Programs/clearb"
-alias bro="nohup /nfs/homes/bapasqui/sgoinfre/Others/zen.linux-specific/zen/zen-bin > /dev/null 2>&1 &"
 alias hist="cat ~/.zsh/.zsh_history"
 alias cat_config="cat ~/.zshrc"
+alias tmp="cd /tmp"
+alias v="nvim"
+alias vim="nvim"
+alias cl="clear"
+#alias lock="~/sgoinfre/Others/ft_fraude/launch"
 
 #Cleaning
-alias clean="~/sgoinfre/Others/Programs/cleaning_pc"
 alias clean1="du -d 1 -h | sort -h"
 alias clean2="du -h - d 2 . | sort -hf"
+alias boot="lightdm-session"
+alias trash="rm -rf ~/.local/share/Trash/"
 
 #Makefile Commands
 alias mf="make fclean"
@@ -35,18 +47,6 @@ alias m="make"
 function mfa() {
 	echo "Cleaning all the exercices..."
 	find . -type d -exec make fclean -C {} \; > /dev/null 2>&1
-}
-
-function cdc()
-{
-	cd $1
-	code .
-}
-function gtn() {
-    make fclean
-    git add .
-    cz commit
-	git push
 }
 
 function gt() {
@@ -74,26 +74,28 @@ function ignore()
 	$1 2> /dev/null
 }
 
-#ZSHRC conf utilities
+#USELESS
+autoload -Uz tetriscurses
+alias tetris=tetriscurses
+
+#LINKS
 alias edit="vim ~/.zshrc"
 alias reload="source ~/.zshrc"
 export PATH=$HOME/.local/bin:$PATH
 alias cd="z"
 eval "$(zoxide init zsh)"
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-### Added by Zinit's installer
-if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
-    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
-    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
-        print -P "%F{33} %F{34}Installation successful.%f%b" || \
-        print -P "%F{160} The clone has failed.%f%b"
-fi
+# ANTIGEN
+source ~/antigen.zsh
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen apply
 
-source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
-### End of Zinit's installer chunk
-source /nfs/homes/bapasqui/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export LD_LIBRARY_PATH=/home/bapasqui/.capt/root/lib/x86_64-linux-gnu:/home/bapasqui/.capt/root/usr/lib/x86_64-linux-gnu:$HOME/lib
+export PATH=/home/bapasqui/.capt:/home/bapasqui/.capt/root/usr/local/sbin:/home/bapasqui/.capt/root/usr/local/bin:/home/bapasqui/.capt/root/usr/sbin:/home/bapasqui/.capt/root/usr/bin:/home/bapasqui/.capt/root/sbin:/home/bapasqui/.capt/root/bin:/home/bapasqui/.capt/root/usr/games:/home/bapasqui/.capt/root/usr/local/games:/home/bapasqui/.capt/snap/bin:/home/bapasqui/.nvm/versions/node/v23.10.0/bin:/home/bapasqui/.local/bin:/home/bapasqui/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/home/bapasqui/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/bapasqui/.antigen/bundles/zsh-users/zsh-autosuggestions:/home/bapasqui/.antigen/bundles/zsh-users/zsh-syntax-highlighting
+
+

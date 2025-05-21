@@ -34,7 +34,7 @@ UNSPLASH_PATH="/home/${USER}/Pictures/Unsplash"
 
 ## GIFHY API
 GIFHY_API_KEY=5oLXGhIOw5r18zmB6XDUpaUX3VqWVKdy
-GIFHY_TAG="meme"
+GIFHY_TAG=" funny"
 GIFHY_URL=$(curl -s  https://api.giphy.com/v1/gifs/random?api_key=${GIFHY_API_KEY}&tag=${GIFHY_PATH})
 GIFHY_PATH="/home/${USER}/Pictures/GIFHY"
 
