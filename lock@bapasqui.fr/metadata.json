@@ -1,0 +1,15 @@
+{
+    "name": "pp-lock",
+    "description": "launch xscreensaver lock screen and generate a random pp",
+    "original-author": "bapasqui@42.fr",
+    "url": "https://42.fr/",
+    "uuid": "lock@bapasqui.fr",
+    "shell-version": [
+	"40",
+	"41",
+	"42"
+    ],
+    "gettext-domain": "lockscreen-pp",
+    "version": 1
+}
+
