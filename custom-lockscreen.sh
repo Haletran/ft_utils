@@ -25,6 +25,20 @@ BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 NC='\033[0m'
 
+## BOTH OF THOSE KEYS ARE NOT MINE SO USE THEM AS YOU WILL
+
+## UNSPLASH API
+UNSPLASH_API_KEY=31f0e3b7987a59c33b7f27719eaecd22e430ec4408f3667b9b604f57a5719db1
+UNSPLASH_URL=$(curl -s "https://api.unsplash.com/photos/random?client_id=${UNSPLASH_API_KEY}" | grep -Po '"full":.*?[^\\]",' | cut -f4- -d'"' | cut -d'"' -f'1')
+UNSPLASH_PATH="/home/${USER}/Pictures/Unsplash"
+
+## GIFHY API
+GIFHY_API_KEY=5oLXGhIOw5r18zmB6XDUpaUX3VqWVKdy
+GIFHY_TAG="meme,funny"
+GIFHY_URL=$(curl -s  https://api.giphy.com/v1/gifs/random?api_key=${GIFHY_API_KEY}&tag=${GIFHY_PATH})
+GIFHY_PATH="/home/${USER}/Pictures/GIFHY"
+
+
 ## UTILS
 parse_args() {
     while [[ $# -gt 0 ]]; do
@@ -36,7 +50,7 @@ parse_args() {
             -r|--reset)
                 echo -e "${YELLOW}Resetting to default images...${NC}"
                 if [ -f ~/.face ]; then
-                    \rm -f /tmp/codam-web-greeter-user-avatar
+\rm -f /tmp/codam-web-greeter-user-avatar
                     \rm -f ~/.face
                     \rm -f ~/.face.back
                     DATA_SERVER_URL=$(/usr/bin/grep -Po '(?<=data-server-url=).*' /usr/share/web-greeter/themes/codam/settings.ini | /usr/bin/sed 's/^"\(.*\)"$/\1/' | /usr/bin/sed 's/\/config//')
@@ -62,6 +76,43 @@ parse_args() {
                 FACE_OPTIONS=true
                 shift
                 ;;
+            -a | --auto)
+                shift
+                if [ ! -d $UNSPLASH_PATH ]; then
+                    mkdir $UNSPLASH_PATH
+                fi
+                wget -q $UNSPLASH_URL -O $UNSPLASH_PATH"/screen_back.jpeg"
+                SCREENSV_PARAM=$UNSPLASH_PATH"/screen_back.jpeg"
+
+                if [ ! -d $GIFHY_PATH ]; then
+                    mkdir $GIFHY_PATH
+                fi
+                gif_url=$(echo "$GIFHY_URL" | jq -r '.data.images.original.url')
+                curl -o $GIFHY_PATH"/random_pp.gif" "$gif_url"
+                FACE_PARAM=$GIFHY_PATH"/random_pp.gif"
+                shift
+                ;;
+            -as | --auto-screensaver)
+                shift
+                if [ ! -d $UNSPLASH_PATH ]; then
+                    mkdir $UNSPLASH_PATH
+                fi
+                wget -q $UNSPLASH_URL -O $UNSPLASH_PATH"/screen_back.jpeg"
+                SCREENSV_PARAM=$UNSPLASH_PATH"/screen_back.jpeg"
+                SCREENSAVER_OPTIONS=true
+                shift
+                ;;
+            -af | --auto-face)
+                shift
+                if [ ! -d $GIFHY_PATH ]; then
+                    mkdir $GIFHY_PATH
+                fi
+                gif_url=$(echo "$GIFHY_URL" | jq -r '.data.images.original.url')
+                curl -o $GIFHY_PATH"/random_pp.gif" "$gif_url"
+                FACE_PARAM=$GIFHY_PATH"/random_pp.gif"
+                FACE_OPTIONS=true
+                shift
+                ;;
             -s|--screensaver)
                 shift
                 if [ -z "$1" ]; then
@@ -80,6 +131,9 @@ parse_args() {
                 \echo "  -r, --reset     Reset to default images"
                 \echo "  -h, --help      Show this help message"
                 \echo "  -f, --face      Specify a custom face image"
+                \echo "  -a, --auto      Automatically set a random wallpaper from Unsplash and a random face from Giphy"
+                \echo "  -as, --auto-screensaver Automatically set a random screensaver image from Unsplash"
+                \echo "  -af, --auto-face Automatically set a random face image from Giphy"
                 \echo "  -s, --screensaver Specify a custom screensaver image"
                 \exit 0
                 ;;
