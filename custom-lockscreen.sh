@@ -16,6 +16,7 @@ SCREENSV_PARAM=""
 
 FACE_OPTIONS=false
 SCREENSAVER_OPTIONS=false
+FACE_SRC="cat"
 
 ## COLORS
 RED='\033[0;31m'
@@ -34,10 +35,12 @@ UNSPLASH_PATH="/home/${USER}/Pictures/Unsplash"
 
 ## GIFHY API
 GIFHY_API_KEY=5oLXGhIOw5r18zmB6XDUpaUX3VqWVKdy
-GIFHY_TAG="funny meme"
-GIFHY_ENCODED_TAG=$(echo "${GIFHY_TAG}" | jq -sRr @uri)
-GIFHY_RESPONSE=$(curl -s "https://api.giphy.com/v1/gifs/random?api_key=${GIFHY_API_KEY}&tag=${GIFHY_ENCODED_TAG}")
+GIFHY_TAG="meme,funny"
+GIFHY_URL=$(curl -s  https://api.giphy.com/v1/gifs/random?api_key=${GIFHY_API_KEY}&tag=${GIFHY_PATH})
 GIFHY_PATH="/home/${USER}/Pictures/GIFHY"
+
+## CAT API
+CAT_URL=$(curl -s -L http://edgecats.net/random)
 
 ## UTILS
 parse_args() {
@@ -87,7 +90,11 @@ parse_args() {
                 if [ ! -d $GIFHY_PATH ]; then
                     mkdir $GIFHY_PATH
                 fi
-                gif_url=$(echo "$GIFHY_URL" | jq -r '.data[0].images.original.url')
+                if [[ "$FACE_SRC" == "cat" ]]; then
+                    gif_url=$CAT_URL
+                elif [[ "$FACE_SRC" == "giphy" ]]; then
+                    gif_url=$(echo "$GIFHY_URL" | jq -r '.data.images.original.url')
+                fi
                 curl -o $GIFHY_PATH"/random_pp.gif" "$gif_url"
                 FACE_PARAM=$GIFHY_PATH"/random_pp.gif"
                 shift
@@ -107,7 +114,11 @@ parse_args() {
                 if [ ! -d $GIFHY_PATH ]; then
                     mkdir $GIFHY_PATH
                 fi
-                gif_url=$(echo "$GIFHY_URL" | jq -r '.data.images.original.url')
+                if [[ "$FACE_SRC" == "cat" ]]; then
+                    gif_url=$CAT_URL
+                elif [[ "$FACE_SRC" == "giphy" ]]; then
+                    gif_url=$(echo "$GIFHY_URL" | jq -r '.data.images.original.url')
+                fi
                 curl -o $GIFHY_PATH"/random_pp.gif" "$gif_url"
                 FACE_PARAM=$GIFHY_PATH"/random_pp.gif"
                 FACE_OPTIONS=true
@@ -227,7 +238,3 @@ if [ ! -f /usr/bin/zenity ]; then
 fi
 
 main
-
-
-
-
