@@ -16,7 +16,7 @@ SCREENSV_PARAM=""
 
 FACE_OPTIONS=false
 SCREENSAVER_OPTIONS=false
-FACE_SRC="cat"
+FACE_SRC="giphy" # change to cat or giphy
 
 ## COLORS
 RED='\033[0;31m'
