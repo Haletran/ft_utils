@@ -50,6 +50,7 @@ function _lock() {
     debounceTimeout = Mainloop.timeout_add(420, function() {
       debounceTimeout = null;
 
+      // change the path to where the script is located
       let preLockProc = Gio.Subprocess.new(['/home/bapasqui/bin/custom-lockscreen', '-af'], 0);
 
       preLockProc.wait_async(null, (proc, res) => {
