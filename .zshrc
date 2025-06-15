@@ -30,7 +30,6 @@ alias tmp="cd /tmp"
 alias v="nvim"
 alias vim="nvim"
 alias cl="clear"
-#alias lock="~/sgoinfre/Others/ft_fraude/launch"
 
 #Cleaning
 alias clean1="du -d 1 -h | sort -h"

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 RED='\033[0;31m'
 NC='\033[0m'
@@ -29,12 +29,20 @@ connection()
     echo "Connecting to $DEVICE..."
     timeout 5 bluetoothctl scan on > /dev/null
     CASQUE=$(bluetoothctl devices | grep -w $DEVICE | awk '{print $2}')
-    bluetoothctl connect $CASQUE > /dev/null
-    if [ $? -ne 0 ]; then
-        echo -e $RED"Failed to connect to WH-1000XM4"$NC
+    if [ -z "$CASQUE" ]; then
+        echo -e $RED"Device $DEVICE not found"$NC
         exit 1
     fi
-    echo -e $GREEN"-> Connected to WH-1000XM4"$NC
+    while [ $? -ne 0 ]; do
+        echo -e $RED"Failed to connect to $DEVICE, retrying..."$NC
+        sleep 2
+        bluetoothctl connect $CASQUE > /dev/null
+    done
+    if [ $? -ne 0 ]; then
+        echo -e $RED"Failed to connect to $DEVICE"$NC
+        exit 1
+    fi
+    echo -e $GREEN"-> Connected to $DEVICE"$NC
 }
 
 remove_devices

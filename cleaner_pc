@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # COLOR
 RESET='\033[0m'
@@ -61,8 +61,9 @@ check_dependencies() {
 bypass() {
 	clear
 	gum style --foreground 2 "Bypass mode enabled."
-    export XDG_DATA_DIRS=$XDG_DATA_DIRS:$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/var/lib/snapd/desktop:$HOME/.local/share/applications
-	gnome-session
+    lightdm-session
+    #export XDG_DATA_DIRS=$XDG_DATA_DIRS:$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/var/lib/snapd/desktop:$HOME/.local/share/applications
+	#gnome-session
 }
 
 storage_checker() {

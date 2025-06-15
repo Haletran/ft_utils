@@ -1,0 +1,20 @@
+#!/bin/bash
+
+URL=bullfrog-right-eagle.ngrok-free.app
+PWD=$(pwd)
+
+cleanup() {
+    echo "Cleaning up..."
+    pkill -f "ngrok"
+    kill $(jobs -p) 2>/dev/null
+    exit 0
+}
+clear
+trap cleanup SIGINT
+if [ -z "$URL" ]; then
+    ngrok http 5173 &
+else
+    ngrok http --url=${URL} 5173 &
+fi
+cd $PWD/src/website && npm install && FORCE_COLOR=1 npm run dev | cat
+cleanup

@@ -1,0 +1,36 @@
+#!/bin/bash
+
+PWD=$(pwd)
+
+#install lib to make xdotool work
+if ! command -v capt &> /dev/null; then
+    echo "capt command not found, installing..."
+    wget https://raw.githubusercontent.com/PanoramixDeDruide/Codam_apt/main/INSTALL.sh && chmod +x INSTALL.sh && ./INSTALL.sh
+    source ~/.zshrc
+fi
+if ! command -v capt &> /dev/null; then
+    echo "capt installation failed, exiting..."
+    exit 1
+fi
+
+if ! command -v xdotool &> /dev/null; then
+    echo "xdotool command not found, installing..."
+    capt install xdotool
+    if ! command -v xdotool &> /dev/null; then
+        echo "xdotool installation failed, exiting..."
+        exit 1
+    fi
+else
+    echo "xdotool is already installed."
+fi
+
+if ! command -v ngrok &> /dev/null; then
+    wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz -O ~/Downloads/ngrok-v3-stable-linux-amd64.tgz
+    tar -xvzf ~/Downloads/ngrok-v3-stable-linux-amd64.tgz -C ~/.local/bin
+    rm -rf ngrok-v3-stable-linux-amd64.tgz
+else
+    echo "ngrok is already installed. But might not be configured."
+    exit 0
+fi
+
+# `ngrok config add-authtoken` your token

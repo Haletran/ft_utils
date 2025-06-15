@@ -1,4 +1,4 @@
-#!bin/sh
+#!/usr/bin/env bash
 
 install_vscode()
 {
@@ -13,7 +13,7 @@ install_vscode()
 
 main()
 {
-    read -p "Do you want to update vscode? (y/n): " INSTALL_VSCODE
+    read -p "Do you want to install the latest vscode version? (y/n): " INSTALL_VSCODE
     if [ $? -eq 1 ] ; then echo -e "\nexit" && exit 1; fi
     if [ $INSTALL_VSCODE = "y" ]; then
         echo "Updating vscode..."
