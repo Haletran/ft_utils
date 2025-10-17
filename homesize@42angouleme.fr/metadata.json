@@ -1,0 +1,15 @@
+{
+  "uuid": "homesize@42angouleme.fr",
+  "name": "Home Directory Size Monitor (custom version)",
+  "description": "Monitor home directory disk usage with visual gauge and detailed breakdown",
+  "version": 1,
+  "shell-version": [
+    "42",
+    "43",
+    "44",
+    "45",
+    "46"
+  ],
+  "url": "",
+  "gettext-domain": "homesize"
+}

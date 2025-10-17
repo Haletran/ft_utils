@@ -1,0 +1,87 @@
+/* Home Directory Size Monitor Extension Styles */
+
+/* Main container styling */
+.disk-usage-main-box {
+    padding: 0 4px;
+}
+
+.disk-usage-icon {
+    margin-right: 4px;
+    color: #ffffff;
+}
+
+.disk-usage-gauge-container {
+    margin-right: 4px;
+    padding: 2px 0;
+}
+
+.disk-usage-gauge-bg {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.disk-usage-gauge-fill {
+    border-radius: 3px;
+    transition: width 0.3s ease-in-out, background-color 0.2s ease;
+    min-width: 1px;
+}
+
+.disk-usage-percentage {
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    min-width: 25px;
+    text-align: right;
+    margin-left: 6px;
+}
+
+.disk-usage-header {
+    font-weight: bold;
+    color: #ffffff;
+    font-size: 13px;
+    padding: 8px 12px;
+}
+
+.disk-usage-details {
+    color: #e0e0e0;
+    font-size: 11px;
+    font-family: 'Roboto Mono', 'DejaVu Sans Mono', monospace;
+    padding: 4px 12px;
+    line-height: 1.4;
+}
+
+/* Panel button hover effects */
+.panel-status-menu-box:hover .disk-usage-gauge-bg {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.panel-status-menu-box:hover .disk-usage-percentage {
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+/* Active state */
+.panel-status-menu-box:active .disk-usage-gauge-bg {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Popup menu styling */
+.popup-menu-item.disk-usage-header {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    margin: 4px;
+}
+
+.popup-menu-item.disk-usage-details {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    margin: 4px;
+}
+
+.popup-menu-item:hover.disk-usage-header,
+.popup-menu-item:hover.disk-usage-details {
+    background-color: rgba(255, 255, 255, 0.1);
+}
